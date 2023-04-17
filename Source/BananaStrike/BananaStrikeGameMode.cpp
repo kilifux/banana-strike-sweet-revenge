@@ -12,4 +12,5 @@ ABananaStrikeGameMode::ABananaStrikeGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+	
 }

@@ -64,6 +64,7 @@ void ABananaStrikeCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -123,6 +124,18 @@ void ABananaStrikeCharacter::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
+
+void ABananaStrikeCharacter::AddCoin()
+{
+	Coins += 1;
+}
+
+int ABananaStrikeCharacter::GetCoins() const
+{
+	return Coins;
+}
+
+
 
 
 

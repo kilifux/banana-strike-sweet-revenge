@@ -39,7 +39,12 @@ class ABananaStrikeCharacter : public ACharacter
 
 public:
 	ABananaStrikeCharacter();
-	
+
+	UFUNCTION()
+	void AddCoin();
+
+	UFUNCTION(BlueprintPure)
+	int GetCoins() const;
 
 protected:
 
@@ -48,7 +53,10 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+private:
+	UPROPERTY()
+	int Coins = 0;
 
 protected:
 	// APawn interface
@@ -62,5 +70,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	
 };
 
