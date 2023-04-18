@@ -36,3 +36,8 @@ void AGun::Tick(float DeltaTime)
 	
 }
 
+void AGun::PullTrigger()
+{
+	UE_LOG(LogTemp, Display, TEXT("SHOOOT!"));
+}
+
