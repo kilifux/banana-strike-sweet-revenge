@@ -7,6 +7,8 @@
 #include "Components/BoxComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "NiagaraActor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGun::AGun()
@@ -19,6 +21,9 @@ AGun::AGun()
 	
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	StaticMeshComponent->SetupAttachment(SceneComponent);
+
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point Component"));
+	ProjectileSpawnPoint->SetupAttachment(StaticMeshComponent);
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +43,17 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
-	UE_LOG(LogTemp, Display, TEXT("SHOOOT!"));
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (OwnerPawn) return;
+	AController* OwnerController = OwnerPawn->GetController();
+	if (OwnerController) return;
+
+	FVector Location;
+	FRotator Rotation;
+	OwnerController->GetPlayerViewPoint(Location ,Rotation);
+	GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
+	FVector End = Location + Rotation.Vector() * MaxRange;
+
+	DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
 }
 
