@@ -44,16 +44,20 @@ void AGun::Tick(float DeltaTime)
 void AGun::PullTrigger()
 {
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn) return;
+	if (OwnerPawn == nullptr) return;
 	AController* OwnerController = OwnerPawn->GetController();
-	if (OwnerController) return;
+	if (OwnerController == nullptr) return;
 
 	FVector Location;
 	FRotator Rotation;
 	OwnerController->GetPlayerViewPoint(Location ,Rotation);
-	GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation());
 	FVector End = Location + Rotation.Vector() * MaxRange;
-
-	DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
+	FHitResult Hit;
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
+	if (bSuccess)
+	{
+		FVector ShotDirection = -Rotation.Vector();
+		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
+	}
 }
 

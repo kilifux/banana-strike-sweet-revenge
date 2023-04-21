@@ -18,5 +18,8 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> HUDClass;
+	TSubclassOf<class UUserWidget> HUDCoins;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> HUDCrosshair;
 };

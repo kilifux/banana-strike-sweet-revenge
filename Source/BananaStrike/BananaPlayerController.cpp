@@ -9,10 +9,17 @@ void ABananaPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UUserWidget* HUD = CreateWidget(this, HUDClass);
+	UUserWidget* HUDCoinsUserWidget = CreateWidget(this, HUDCoins);
 
-	if (HUD != nullptr)
+	if (HUDCoinsUserWidget != nullptr)
 	{
-		HUD->AddToViewport();
+		HUDCoinsUserWidget->AddToViewport();
+	}
+
+	UUserWidget* HUDCrosshairUserWidget = CreateWidget(this, HUDCrosshair);
+	
+	if (HUDCrosshairUserWidget != nullptr)
+	{
+		HUDCrosshairUserWidget->AddToViewport();
 	}
 }
