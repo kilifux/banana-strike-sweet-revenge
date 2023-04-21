@@ -17,9 +17,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> HUDCoins;
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDCoinsWidgetClass;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> HUDCrosshair;
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDCrosshairWidgetClass;
 };

@@ -57,6 +57,8 @@ void ABananaStrikeCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	Health = MaxHealth;
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -66,6 +68,17 @@ void ABananaStrikeCharacter::BeginPlay()
 		}
 	}
 	
+}
+
+float ABananaStrikeCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
+	AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply;
+	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+
+	return DamageToApply;
 }
 
 //////////////////////////////////////////////////////////////////////////

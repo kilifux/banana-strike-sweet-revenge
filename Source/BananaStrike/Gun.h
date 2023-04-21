@@ -25,6 +25,9 @@ public:
 
 	void PullTrigger();
 
+	bool GunTrace(FHitResult &Hit, FVector& ShotDirection);
+	AController* GetOwnerController() const;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SceneComponent;
@@ -40,6 +43,11 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 1000;
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 10;
+	
+	FCollisionQueryParams Params;
 	
 
 };

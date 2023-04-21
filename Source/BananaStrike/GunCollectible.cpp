@@ -21,7 +21,6 @@ void AGunCollectible::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
 			BananaStrikeCharacter->SetEquippedGun(Gun);
 			Destroy();
 		}
-
 	}
 }
 

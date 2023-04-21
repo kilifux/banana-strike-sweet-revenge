@@ -8,6 +8,7 @@
 #include "Components/TextRenderComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "NiagaraActor.h"
+#include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -31,7 +32,6 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 }
 
 // Called every frame
@@ -43,21 +43,43 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn == nullptr) return;
-	AController* OwnerController = OwnerPawn->GetController();
-	if (OwnerController == nullptr) return;
+	FHitResult Hit;
+	FVector ShotDirection;
+	bool bSuccess = GunTrace(Hit, ShotDirection);
+	
+	if (bSuccess)
+	{
+		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
+
+		AActor* HitActor = Hit.GetActor();
+		if (HitActor)
+		{
+			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), this);
+		}
+	}
+}
+
+bool AGun::GunTrace(FHitResult& Hit, FVector& ShotDirection)
+{
+	if (GetOwnerController() == nullptr)
+		return false;
 
 	FVector Location;
 	FRotator Rotation;
-	OwnerController->GetPlayerViewPoint(Location ,Rotation);
+	GetOwnerController()->GetPlayerViewPoint(Location ,Rotation);
+	
 	FVector End = Location + Rotation.Vector() * MaxRange;
-	FHitResult Hit;
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
-	if (bSuccess)
-	{
-		FVector ShotDirection = -Rotation.Vector();
-		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
-	}
+	TArray<AActor*> Actors {this, GetOwner()};
+	Params.AddIgnoredActors(Actors);
+	return GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
+}
+
+AController* AGun::GetOwnerController() const
+{
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (OwnerPawn == nullptr)
+		return nullptr;
+	return OwnerPawn->GetController();
 }
 

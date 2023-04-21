@@ -65,11 +65,17 @@ protected:
 	void Shoot();
 
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
 
 	UPROPERTY()
 	AGun* EquippedGun;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth = 100;
+
+	UPROPERTY(VisibleAnywhere)
+	float Health;
 
 protected:
 	// APawn interface
@@ -77,6 +83,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 public:
 	/** Returns CameraBoom subobject **/
