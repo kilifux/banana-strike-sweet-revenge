@@ -25,6 +25,8 @@ AGun::AGun()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point Component"));
 	ProjectileSpawnPoint->SetupAttachment(StaticMeshComponent);
+	
+	bCanShoot = true;
 }
 
 // Called when the game starts or when spawned
@@ -43,12 +45,16 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
+	if (!bCanShoot) return;
+	
 	FHitResult Hit;
 	FVector ShotDirection;
 	bool bSuccess = GunTrace(Hit, ShotDirection);
 	
 	if (bSuccess)
 	{
+		bCanShoot = false;
+		GetWorld()->GetTimerManager().SetTimer(ShootTimerHandle, this, &AGun::ResetCanShoot, ShootRate, false);
 		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
 
 		AActor* HitActor = Hit.GetActor();
@@ -81,5 +87,10 @@ AController* AGun::GetOwnerController() const
 	if (OwnerPawn == nullptr)
 		return nullptr;
 	return OwnerPawn->GetController();
+}
+
+void AGun::ResetCanShoot()
+{
+	bCanShoot = true;
 }
 

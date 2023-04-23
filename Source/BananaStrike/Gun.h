@@ -28,6 +28,8 @@ public:
 	bool GunTrace(FHitResult &Hit, FVector& ShotDirection);
 	AController* GetOwnerController() const;
 
+	void ResetCanShoot();
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SceneComponent;
@@ -48,6 +50,13 @@ private:
 	float Damage = 10;
 	
 	FCollisionQueryParams Params;
+
+	FTimerHandle ShootTimerHandle;
+	
+	bool bCanShoot;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ShootRate;
 	
 
 };
