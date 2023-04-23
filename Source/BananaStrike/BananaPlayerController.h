@@ -21,5 +21,18 @@ private:
 	TSubclassOf<class UUserWidget> HUDCoinsWidgetClass;
 
 	UPROPERTY(EditAnywhere, Category = "Widgets")
-	TSubclassOf<class UUserWidget> HUDCrosshairWidgetClass;
+	TSubclassOf<class UUserWidget> HUDGunCrosshairWidgetClass;
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDNoGunCrosshairWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* HUDGunCrosshairUserWidget;
+
+	UPROPERTY()
+	UUserWidget* HUDNoGunCrosshairUserWidget;
+
+public:
+	UFUNCTION()
+	void SetGunWidget();
 };

@@ -16,10 +16,24 @@ void ABananaPlayerController::BeginPlay()
 		HUDCoinsUserWidget->AddToViewport();
 	}
 
-	UUserWidget* HUDCrosshairUserWidget = CreateWidget(this, HUDCrosshairWidgetClass);
+	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
 	
-	if (HUDCrosshairUserWidget)
+	if (HUDNoGunCrosshairUserWidget)
 	{
-		HUDCrosshairUserWidget->AddToViewport();
+		HUDNoGunCrosshairUserWidget->AddToViewport();
+	}
+}
+
+void ABananaPlayerController::SetGunWidget()
+{
+	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
+	
+	if (HUDGunCrosshairUserWidget)
+	{
+		HUDGunCrosshairUserWidget->AddToViewport();
+		if (HUDGunCrosshairUserWidget)
+		{
+			HUDNoGunCrosshairUserWidget->RemoveFromParent();
+		}
 	}
 }
