@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "BananaStrikeCharacter.generated.h"
 
+class AGun;
 
 UCLASS(config=Game)
 class ABananaStrikeCharacter : public ACharacter
@@ -29,6 +30,10 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* JumpAction;
 
+	/** Shoot Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* ShootAction;
+
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
@@ -46,6 +51,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	int GetCoins() const;
 
+	UFUNCTION()
+	void SetEquippedGun(AGun* Gun);
+
 protected:
 
 	/** Called for movement input */
@@ -54,9 +62,20 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	void Shoot();
+
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
+
+	UPROPERTY()
+	AGun* EquippedGun;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth = 100;
+
+	UPROPERTY(VisibleAnywhere)
+	float Health;
 
 protected:
 	// APawn interface
@@ -64,6 +83,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 public:
 	/** Returns CameraBoom subobject **/

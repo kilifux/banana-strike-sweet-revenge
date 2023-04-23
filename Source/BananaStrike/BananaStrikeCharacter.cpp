@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Gun.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -56,6 +57,8 @@ void ABananaStrikeCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	Health = MaxHealth;
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -65,6 +68,17 @@ void ABananaStrikeCharacter::BeginPlay()
 		}
 	}
 	
+}
+
+float ABananaStrikeCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
+	AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply;
+	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+
+	return DamageToApply;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,6 +93,9 @@ void ABananaStrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
+		//Shooting
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::Shoot);
+		
 		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::Move);
 
@@ -125,6 +142,14 @@ void ABananaStrikeCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void ABananaStrikeCharacter::Shoot()
+{
+	if (EquippedGun)
+	{
+		EquippedGun->PullTrigger();
+	}
+}
+
 void ABananaStrikeCharacter::AddCoin()
 {
 	Coins += 1;
@@ -134,6 +159,12 @@ int ABananaStrikeCharacter::GetCoins() const
 {
 	return Coins;
 }
+
+void ABananaStrikeCharacter::SetEquippedGun(AGun* Gun) 
+{
+	EquippedGun = Gun;
+}
+
 
 
 

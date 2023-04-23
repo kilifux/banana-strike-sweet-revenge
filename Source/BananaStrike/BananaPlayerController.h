@@ -17,6 +17,22 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> HUDClass;
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDCoinsWidgetClass;
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDGunCrosshairWidgetClass;
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<class UUserWidget> HUDNoGunCrosshairWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* HUDGunCrosshairUserWidget;
+
+	UPROPERTY()
+	UUserWidget* HUDNoGunCrosshairUserWidget;
+
+public:
+	UFUNCTION()
+	void SetGunWidget();
 };

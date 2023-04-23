@@ -2,6 +2,8 @@
 
 
 #include "GunCollectible.h"
+
+#include "BananaPlayerController.h"
 #include "BananaStrikeCharacter.h"
 #include "Gun.h"
 
@@ -12,15 +14,21 @@ void AGunCollectible::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
 	if (OtherActor->IsA<ABananaStrikeCharacter>())
 	{
 		BananaStrikeCharacter = Cast<ABananaStrikeCharacter>(OtherActor);
-
-		if( BananaStrikeCharacter)
+		
+		if (BananaStrikeCharacter)
 		{
-			Gun = GetWorld()->SpawnActor<AGun>(GunClass);
-			Gun->AttachToComponent(BananaStrikeCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket"));
-			Gun->SetOwner(BananaStrikeCharacter);
-			Destroy();
+			ABananaPlayerController* Controller = Cast<ABananaPlayerController>(BananaStrikeCharacter->GetController());
+			if (Controller)
+			{
+				Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+				Gun->AttachToComponent(BananaStrikeCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket"));
+				Gun->SetOwner(BananaStrikeCharacter);
+				BananaStrikeCharacter->SetEquippedGun(Gun);
+				Controller->SetGunWidget();
+				Destroy();
+			}
 		}
-
 	}
 }
+
 

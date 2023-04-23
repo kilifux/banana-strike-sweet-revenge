@@ -23,11 +23,40 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void PullTrigger();
+
+	bool GunTrace(FHitResult &Hit, FVector& ShotDirection);
+	AController* GetOwnerController() const;
+
+	void ResetCanShoot();
+
 private:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* SceneComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMeshComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ANiagaraActor> ShootEffect;
+
+	UPROPERTY(EditAnywhere)
+	float MaxRange = 1000;
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 10;
+	
+	FCollisionQueryParams Params;
+
+	FTimerHandle ShootTimerHandle;
+	
+	bool bCanShoot;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ShootRate;
+	
 
 };
