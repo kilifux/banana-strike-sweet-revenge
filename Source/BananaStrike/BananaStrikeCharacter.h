@@ -42,6 +42,17 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
+	UMaterialInterface* BananaMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
+	UMaterialInstanceDynamic* BananaMaterialInstance;
+
+	UPROPERTY()
+	UMeshComponent* MeshComponent;
+
+	
+
 public:
 	ABananaStrikeCharacter();
 
@@ -76,6 +87,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	float Health;
+	
+	UPROPERTY()
+	float RemapValue;
 
 protected:
 	// APawn interface

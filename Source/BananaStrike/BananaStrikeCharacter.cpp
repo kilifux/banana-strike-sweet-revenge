@@ -47,7 +47,7 @@ ABananaStrikeCharacter::ABananaStrikeCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
+	
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -58,6 +58,9 @@ void ABananaStrikeCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
+	MeshComponent = GetMesh();
+	BananaMaterial = MeshComponent->GetMaterial(0);
+	BananaMaterialInstance = MeshComponent->CreateDynamicMaterialInstance(0, BananaMaterial);
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -77,7 +80,13 @@ float ABananaStrikeCharacter::TakeDamage(float DamageAmount, FDamageEvent const&
 	DamageToApply = FMath::Min(Health, DamageToApply);
 	Health -= DamageToApply;
 	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-
+	RemapValue = FMath::Clamp(Health / MaxHealth, 0.0f, 1.0f);
+	
+	if(BananaMaterialInstance)
+	{
+		BananaMaterialInstance->SetScalarParameterValue("Health_Color", RemapValue);
+	}
+	
 	return DamageToApply;
 }
 
