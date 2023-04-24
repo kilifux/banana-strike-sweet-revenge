@@ -2,7 +2,7 @@
 TPP game in which we control a banana and shoot sweet enemies, at least for now
 
 
-As of 23.04.2023
+As of 24.04.2023
 
-https://user-images.githubusercontent.com/73425360/233859348-e49ef91c-8a3a-44d3-9c60-9aad2f5e704e.mp4
+https://user-images.githubusercontent.com/73425360/234097620-55905bec-920c-4f33-9cbe-77f7c6994c9e.mp4
 
