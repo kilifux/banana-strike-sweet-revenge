@@ -70,9 +70,10 @@ bool AGun::GunTrace(FHitResult& Hit, FVector& ShotDirection)
 {
 	if (GetOwnerController() == nullptr)
 		return false;
-
+	
 	FVector Location;
 	FRotator Rotation;
+	ShotDirection = -Rotation.Vector();
 	GetOwnerController()->GetPlayerViewPoint(Location ,Rotation);
 	
 	FVector End = Location + Rotation.Vector() * MaxRange;
