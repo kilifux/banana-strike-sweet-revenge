@@ -15,7 +15,11 @@ public:
 	// Sets default values for this actor's properties
 	ACoin();
 
+private:
+	UPROPERTY()
+	class ABananaPlayerController* BananaPlayerController;
+
 protected:
-	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	
+	//virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	virtual void BeginPlay() override;
 };

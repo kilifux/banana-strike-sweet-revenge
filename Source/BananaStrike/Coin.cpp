@@ -3,16 +3,25 @@
 
 #include "Coin.h"
 
+#include "BananaPlayerController.h"
 #include "BananaStrikeCharacter.h"
 
 
 // Sets default values
 ACoin::ACoin()
 {
-
+	
 }
 
-void ACoin::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+void ACoin::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	
+}
+
+//Moved to Blueprint
+/*void ACoin::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) 
 {
 	Super::OnCapsuleBeginOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
@@ -22,10 +31,17 @@ void ACoin::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 		if (BananaStrikeCharacter)
 		{
 			BananaStrikeCharacter->AddCoin();
+			BananaPlayerController = Cast<ABananaPlayerController>(BananaStrikeCharacter->GetController());
+			if (BananaPlayerController)
+			{
+				BananaPlayerController->SetCoinWidget();
+			}
 			Destroy();
 		}
 	}
-}
+}*/
+
+
 
 
 

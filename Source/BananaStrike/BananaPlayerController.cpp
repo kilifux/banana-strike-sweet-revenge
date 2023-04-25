@@ -3,18 +3,19 @@
 
 #include "BananaPlayerController.h"
 #include "BananaStrikeCharacter.h"
+#include "Animation/UMGSequencePlayer.h"
 #include "Blueprint/UserWidget.h"
+#include "Animation/WidgetAnimation.h"
 
 void ABananaPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	HUDCoinsUserWidget = CreateWidget(this, HUDCoinsWidgetClass);
 	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
 	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
-	HUDCoinsUserWidget = CreateWidget(this, HUDCoinsWidgetClass);
 	
+	//SetCoinWidget();
 	SetNoGunWidget();
-	SetCoinWidget();
-
 }
 
 void ABananaPlayerController::SetGunWidget()
@@ -50,3 +51,4 @@ void ABananaPlayerController::SetCoinWidget()
 		HUDCoinsUserWidget->AddToViewport();
 	}
 }
+

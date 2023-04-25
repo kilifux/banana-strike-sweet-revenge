@@ -34,6 +34,9 @@ private:
 
 	UPROPERTY()
 	UUserWidget* HUDCoinsUserWidget;
+
+
+
 	
 public:
 	UFUNCTION()

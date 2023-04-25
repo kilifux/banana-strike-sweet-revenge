@@ -203,6 +203,11 @@ void ABananaStrikeCharacter::AddCoin()
 	Coins += 1;
 }
 
+void ABananaStrikeCharacter::SetWidgetOnScreen(bool isWidgetOnScreen)
+{
+	bWidgetOnScreen = isWidgetOnScreen;
+}
+
 int ABananaStrikeCharacter::GetCoins() const
 {
 	return Coins;

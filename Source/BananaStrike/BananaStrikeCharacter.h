@@ -57,11 +57,17 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY()
 	UMeshComponent* MeshComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool bWidgetOnScreen = false;
+
 public:
 	ABananaStrikeCharacter();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void AddCoin();
+
+	UFUNCTION(BlueprintCallable)
+	void SetWidgetOnScreen(bool isWidgetOnScreen);
 
 	UFUNCTION(BlueprintPure)
 	int GetCoins() const;
