@@ -8,32 +8,45 @@
 void ABananaPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	UUserWidget* HUDCoinsUserWidget = CreateWidget(this, HUDCoinsWidgetClass);
-
-	if (HUDCoinsUserWidget)
-	{
-		HUDCoinsUserWidget->AddToViewport();
-	}
-
+	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
 	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
+	HUDCoinsUserWidget = CreateWidget(this, HUDCoinsWidgetClass);
 	
-	if (HUDNoGunCrosshairUserWidget)
-	{
-		HUDNoGunCrosshairUserWidget->AddToViewport();
-	}
+	SetNoGunWidget();
+	SetCoinWidget();
+
 }
 
 void ABananaPlayerController::SetGunWidget()
 {
-	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
-	
 	if (HUDGunCrosshairUserWidget)
 	{
 		HUDGunCrosshairUserWidget->AddToViewport();
-		if (HUDGunCrosshairUserWidget)
+		
+		if (HUDNoGunCrosshairUserWidget)
 		{
 			HUDNoGunCrosshairUserWidget->RemoveFromParent();
 		}
+	}
+}
+
+void ABananaPlayerController::SetNoGunWidget()
+{
+	if (HUDNoGunCrosshairUserWidget)
+	{
+		HUDNoGunCrosshairUserWidget->AddToViewport();
+
+		if (HUDGunCrosshairUserWidget)
+		{
+			HUDGunCrosshairUserWidget->RemoveFromParent();
+		}
+	}
+}
+
+void ABananaPlayerController::SetCoinWidget()
+{
+	if (HUDCoinsUserWidget)
+	{
+		HUDCoinsUserWidget->AddToViewport();
 	}
 }

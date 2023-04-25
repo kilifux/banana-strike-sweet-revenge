@@ -45,6 +45,7 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
+	if (bNoGunMode) return;
 	if (!bCanShoot) return;
 	
 	FHitResult Hit;
@@ -54,7 +55,8 @@ void AGun::PullTrigger()
 	if (bSuccess)
 	{
 		bCanShoot = false;
-		GetWorld()->GetTimerManager().SetTimer(ShootTimerHandle, this, &AGun::ResetCanShoot, ShootRate, false);
+		TimerDelegate.BindUFunction(this, FName("SetCanShoot"), true);
+		GetWorld()->GetTimerManager().SetTimer(ShootTimerHandle, TimerDelegate, ShootRate, false);
 		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
 
 		AActor* HitActor = Hit.GetActor();
@@ -90,8 +92,13 @@ AController* AGun::GetOwnerController() const
 	return OwnerPawn->GetController();
 }
 
-void AGun::ResetCanShoot()
+void AGun::SetCanShoot(bool IsCanShoot)
 {
-	bCanShoot = true;
+	bCanShoot = IsCanShoot;
+}
+
+void AGun::SetNoGunMode(bool IsNoGunMode)
+{
+	bNoGunMode = IsNoGunMode;
 }
 

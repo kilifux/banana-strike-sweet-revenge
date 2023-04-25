@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BananaStrikeCharacter.h"
+
+#include "BananaPlayerController.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -57,6 +59,7 @@ void ABananaStrikeCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	BananaPlayerController = Cast<ABananaPlayerController>(GetController());
 	Health = MaxHealth;
 	MeshComponent = GetMesh();
 	BananaMaterial = MeshComponent->GetMaterial(0);
@@ -101,6 +104,11 @@ void ABananaStrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 		//Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		
+		EnhancedInputComponent->BindAction(SlotOneAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::SetSlotOne);
+		EnhancedInputComponent->BindAction(SlotOneAction, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::SetSlotOnePressed);
+		EnhancedInputComponent->BindAction(SlotTwoAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::SetSlotTwo);
+		EnhancedInputComponent->BindAction(SlotTwoAction, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::SetSlotTwoPressed);
 
 		//Shooting
 		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::Shoot);
@@ -159,6 +167,37 @@ void ABananaStrikeCharacter::Shoot()
 	}
 }
 
+void ABananaStrikeCharacter::SetSlotOne()
+{
+	if(!bSlotOnePressed)
+	{
+		if (BananaPlayerController)
+		{
+			BananaPlayerController->SetNoGunWidget();
+			if (EquippedGun)
+			{
+				EquippedGun->SetActorHiddenInGame(true);
+				EquippedGun->SetNoGunMode(true);
+			}
+		}
+		bSlotOnePressed = true;
+	}
+}
+
+void ABananaStrikeCharacter::SetSlotTwo()
+{
+	if(!bSlotTwoPressed)
+	{
+		if (BananaPlayerController && EquippedGun)
+		{
+			BananaPlayerController->SetGunWidget();
+			EquippedGun->SetActorHiddenInGame(false);
+			EquippedGun->SetNoGunMode(false);
+		}
+		bSlotTwoPressed = true;
+	}
+}
+
 void ABananaStrikeCharacter::AddCoin()
 {
 	Coins += 1;
@@ -174,9 +213,13 @@ void ABananaStrikeCharacter::SetEquippedGun(AGun* Gun)
 	EquippedGun = Gun;
 }
 
+void ABananaStrikeCharacter::SetSlotOnePressed()
+{
+	bSlotOnePressed = false;
+}
 
-
-
-
-
+void ABananaStrikeCharacter::SetSlotTwoPressed()
+{
+	bSlotTwoPressed = false;
+}
 

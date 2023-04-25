@@ -32,7 +32,16 @@ private:
 	UPROPERTY()
 	UUserWidget* HUDNoGunCrosshairUserWidget;
 
+	UPROPERTY()
+	UUserWidget* HUDCoinsUserWidget;
+	
 public:
 	UFUNCTION()
 	void SetGunWidget();
+
+	UFUNCTION()
+	void SetNoGunWidget();
+
+	UFUNCTION()
+	void SetCoinWidget();
 };

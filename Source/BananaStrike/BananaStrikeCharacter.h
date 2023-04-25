@@ -42,6 +42,12 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SlotOneAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SlotTwoAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
 	UMaterialInterface* BananaMaterial;
 
@@ -50,8 +56,6 @@ class ABananaStrikeCharacter : public ACharacter
 
 	UPROPERTY()
 	UMeshComponent* MeshComponent;
-
-	
 
 public:
 	ABananaStrikeCharacter();
@@ -75,12 +79,19 @@ protected:
 
 	void Shoot();
 
+	void SetSlotOne();
+	
+	void SetSlotTwo();
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
 
 	UPROPERTY()
 	AGun* EquippedGun;
+
+	UPROPERTY()
+	bool bPlayerHasGun = false;
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
@@ -90,6 +101,21 @@ private:
 	
 	UPROPERTY()
 	float RemapValue;
+
+	bool bSlotOnePressed = false;
+	
+	UPROPERTY()
+	class ABananaPlayerController* BananaPlayerController;
+	
+public:
+	UFUNCTION()
+	void SetSlotOnePressed();
+	
+	UFUNCTION()
+	void SetSlotTwoPressed();
+
+private:
+	bool bSlotTwoPressed = false;
 
 protected:
 	// APawn interface
