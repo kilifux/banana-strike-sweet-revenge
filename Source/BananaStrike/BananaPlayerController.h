@@ -35,10 +35,16 @@ private:
 	UPROPERTY()
 	UUserWidget* HUDCoinsUserWidget;
 
+	UPROPERTY()
+	bool bWidgetOnView;
 
-
-	
 public:
+	UFUNCTION()
+	void SetWidgetOnView(bool isWidgetOnView);
+
+	UFUNCTION()
+	bool GetWidgetOnView() const;
+	
 	UFUNCTION()
 	void SetGunWidget();
 
@@ -47,4 +53,7 @@ public:
 
 	UFUNCTION()
 	void SetCoinWidget();
+
+	UFUNCTION()
+	UUserWidget* GetCoinsUserWidget() const;
 };
