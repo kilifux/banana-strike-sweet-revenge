@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Animation/WidgetAnimation.h"
 #include "Gun.h"
 
 
@@ -226,5 +227,15 @@ void ABananaStrikeCharacter::SetSlotOnePressed()
 void ABananaStrikeCharacter::SetSlotTwoPressed()
 {
 	bSlotTwoPressed = false;
+}
+
+void ABananaStrikeCharacter::SetEnterAnimation(UWidgetAnimation* WidgetAnimation)
+{
+	EnterAnimation = WidgetAnimation;
+}
+
+UWidgetAnimation* ABananaStrikeCharacter::GetWidgetAnimation() const
+{
+	return EnterAnimation;
 }
 

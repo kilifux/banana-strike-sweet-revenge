@@ -35,7 +35,8 @@ protected:
 
 	UPROPERTY()
 	FRotator CurrentRotation;
-
+	
+	UPROPERTY()
 	class ABananaStrikeCharacter* BananaStrikeCharacter;
 
 public:	

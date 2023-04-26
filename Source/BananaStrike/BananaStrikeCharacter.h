@@ -109,9 +109,13 @@ private:
 	float RemapValue;
 
 	bool bSlotOnePressed = false;
+	bool bSlotTwoPressed = false;
 	
 	UPROPERTY()
 	class ABananaPlayerController* BananaPlayerController;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UWidgetAnimation* EnterAnimation;
 	
 public:
 	UFUNCTION()
@@ -120,8 +124,11 @@ public:
 	UFUNCTION()
 	void SetSlotTwoPressed();
 
-private:
-	bool bSlotTwoPressed = false;
+	UFUNCTION(BlueprintCallable)
+	void SetEnterAnimation(UWidgetAnimation* WidgetAnimation);
+
+	UFUNCTION()
+	UWidgetAnimation* GetWidgetAnimation() const;
 
 protected:
 	// APawn interface

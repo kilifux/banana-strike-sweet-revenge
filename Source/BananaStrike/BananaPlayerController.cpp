@@ -2,10 +2,7 @@
 
 
 #include "BananaPlayerController.h"
-#include "BananaStrikeCharacter.h"
-#include "Animation/UMGSequencePlayer.h"
 #include "Blueprint/UserWidget.h"
-#include "Animation/WidgetAnimation.h"
 
 void ABananaPlayerController::BeginPlay()
 {
@@ -14,13 +11,24 @@ void ABananaPlayerController::BeginPlay()
 	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
 	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
 	
-	//SetCoinWidget();
+	SetCoinWidget();
 	SetNoGunWidget();
+}
+
+
+void ABananaPlayerController::SetWidgetOnView(bool isWidgetOnView)
+{
+	bWidgetOnView = isWidgetOnView;
+}
+
+bool ABananaPlayerController::GetWidgetOnView() const
+{
+	return bWidgetOnView;
 }
 
 void ABananaPlayerController::SetGunWidget()
 {
-	if (HUDGunCrosshairUserWidget)
+	if (HUDGunCrosshairUserWidget && !HUDGunCrosshairUserWidget->IsInViewport())
 	{
 		HUDGunCrosshairUserWidget->AddToViewport();
 		
@@ -33,7 +41,7 @@ void ABananaPlayerController::SetGunWidget()
 
 void ABananaPlayerController::SetNoGunWidget()
 {
-	if (HUDNoGunCrosshairUserWidget)
+	if (HUDNoGunCrosshairUserWidget && !HUDNoGunCrosshairUserWidget->IsInViewport())
 	{
 		HUDNoGunCrosshairUserWidget->AddToViewport();
 
@@ -50,5 +58,10 @@ void ABananaPlayerController::SetCoinWidget()
 	{
 		HUDCoinsUserWidget->AddToViewport();
 	}
+}
+
+UUserWidget* ABananaPlayerController::GetCoinsUserWidget() const
+{
+	return HUDCoinsUserWidget;
 }
 
