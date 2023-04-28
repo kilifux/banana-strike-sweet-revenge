@@ -66,9 +66,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddCoin();
 
-	UFUNCTION(BlueprintCallable)
-	void SetWidgetOnScreen(bool isWidgetOnScreen);
-
 	UFUNCTION(BlueprintPure)
 	int GetCoins() const;
 
@@ -124,11 +121,11 @@ public:
 	UFUNCTION()
 	void SetSlotTwoPressed();
 
-	UFUNCTION(BlueprintCallable)
-	void SetEnterAnimation(UWidgetAnimation* WidgetAnimation);
+	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
+	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
 
 	UFUNCTION()
-	UWidgetAnimation* GetWidgetAnimation() const;
+	UWidgetAnimation* GetEnterCoinWidgetAnimation() const;
 
 protected:
 	// APawn interface

@@ -204,11 +204,6 @@ void ABananaStrikeCharacter::AddCoin()
 	Coins += 1;
 }
 
-void ABananaStrikeCharacter::SetWidgetOnScreen(bool isWidgetOnScreen)
-{
-	bWidgetOnScreen = isWidgetOnScreen;
-}
-
 int ABananaStrikeCharacter::GetCoins() const
 {
 	return Coins;
@@ -229,12 +224,12 @@ void ABananaStrikeCharacter::SetSlotTwoPressed()
 	bSlotTwoPressed = false;
 }
 
-void ABananaStrikeCharacter::SetEnterAnimation(UWidgetAnimation* WidgetAnimation)
+void ABananaStrikeCharacter::SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation)
 {
 	EnterAnimation = WidgetAnimation;
 }
 
-UWidgetAnimation* ABananaStrikeCharacter::GetWidgetAnimation() const
+UWidgetAnimation* ABananaStrikeCharacter::GetEnterCoinWidgetAnimation() const
 {
 	return EnterAnimation;
 }

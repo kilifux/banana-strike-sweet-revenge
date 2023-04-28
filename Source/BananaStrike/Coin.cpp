@@ -57,7 +57,7 @@ void ACoin::PlayCoinWidgetAnimation()
 void ACoin::HandleCoinCollected()
 {
 	BananaStrikeCharacter->AddCoin();
-	CoinWidgetAnimation = BananaStrikeCharacter->GetWidgetAnimation();
+	CoinWidgetAnimation = BananaStrikeCharacter->GetEnterCoinWidgetAnimation();
 	BananaPlayerController = Cast<ABananaPlayerController>(BananaStrikeCharacter->GetController());
 	if (BananaPlayerController)
 	{
