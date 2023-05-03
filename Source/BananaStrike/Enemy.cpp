@@ -38,6 +38,11 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		MaterialInstance->SetScalarParameterValue("Health_Color", RemapValue);
 	}
+
+	if (Health == 0)
+	{
+		Destroy();
+	}
 	
 	return DamageToApply;
 }

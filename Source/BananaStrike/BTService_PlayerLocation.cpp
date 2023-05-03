@@ -23,7 +23,6 @@ void UBTService_PlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 
 		if (Distance > 1800)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Distance > 400: %f"), Distance);
 			OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		}
 		else

@@ -46,7 +46,10 @@ private:
 	USceneComponent* ProjectileSpawnPoint;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ANiagaraActor> ShootEffect;
+	TSubclassOf<class ANiagaraActor> HitEffect;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ANiagaraActor> ShootLineEffect;
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 1000;

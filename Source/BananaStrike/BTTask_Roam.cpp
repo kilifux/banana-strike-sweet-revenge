@@ -22,11 +22,9 @@ EBTNodeResult::Type UBTTask_Roam::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	
 	FNavLocation DestinationLocation;
 	const UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
-
 	
 	if (NavSystem && NavSystem->GetRandomReachablePointInRadius(OwnerComp.GetOwner()->GetActorLocation(), 350.0f, DestinationLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Destination: %s"), *DestinationLocation.Location.ToString());
 		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), DestinationLocation.Location);
 		return EBTNodeResult::Succeeded;
 	}
