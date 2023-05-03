@@ -1,9 +1,10 @@
 # banana-strike-sweet-revenge
 TPP game in which we control a banana and shoot sweet enemies, at least for now
 
-As of 26.04.2023
+As of 03.05.2023
 
-https://user-images.githubusercontent.com/73425360/234713609-8d474d88-2ca9-42ee-9b26-6ef025eb616b.mp4
+
+https://user-images.githubusercontent.com/73425360/236050567-6f529ab1-924f-4720-b196-2430c2260fc4.mp4
 
 
 
