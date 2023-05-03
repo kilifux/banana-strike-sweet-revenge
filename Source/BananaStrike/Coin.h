@@ -17,28 +17,26 @@ public:
 
 	UFUNCTION()
 	void HideCoinWidget();
-
+	
 	UFUNCTION()
 	void PlayCoinWidgetAnimation();
-
-	UFUNCTION()
+	
 	void HandleCoinCollected();
 
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class ABananaPlayerController* BananaPlayerController;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	UUserWidget* CoinWidget;
-	UPROPERTY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	class UWidgetAnimation* CoinWidgetAnimation;
 	
 	FTimerDelegate TimerDelegate;
 	FTimerHandle HideWidgetTimerHandle;
-
-	UPROPERTY(EditDefaultsOnly)
+	
 	float ShowCoinWidgetTime = 5.f;
-
 
 protected:
 	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;

@@ -90,10 +90,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	AGun* EquippedGun;
-
-	UPROPERTY()
+	
 	bool bPlayerHasGun = false;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -102,13 +101,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	float Health;
 	
-	UPROPERTY()
 	float RemapValue;
 
 	bool bSlotOnePressed = false;
 	bool bSlotTwoPressed = false;
 	
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	class ABananaPlayerController* BananaPlayerController;
 
 	UPROPERTY(EditDefaultsOnly)

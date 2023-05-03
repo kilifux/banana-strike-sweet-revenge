@@ -12,10 +12,10 @@ class BANANASTRIKE_API AEnemy : public ACharacter
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
-	UMaterialInterface* DonutMaterial;
+	UMaterialInterface* Material;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
-	UMaterialInstanceDynamic* DonutMaterialInstance;
+	UMaterialInstanceDynamic* MaterialInstance;
 	
 	UPROPERTY()
 	UMeshComponent* MeshComponent;
@@ -29,12 +29,7 @@ protected:
 	virtual void BeginPlay() override;
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-private:
+	
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
 

@@ -23,8 +23,7 @@ protected:
 private:
 	UPROPERTY()
 	APawn* PlayerPawn;
-
-	UPROPERTY()
+	
 	float Distance;
 	
 };

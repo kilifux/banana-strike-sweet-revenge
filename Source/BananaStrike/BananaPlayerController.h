@@ -17,25 +17,25 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> HUDCoinsWidgetClass;
 
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> HUDGunCrosshairWidgetClass;
 
-	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> HUDNoGunCrosshairWidgetClass;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDGunCrosshairUserWidget;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDNoGunCrosshairUserWidget;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDCoinsUserWidget;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	bool bWidgetOnView;
 
 public:
