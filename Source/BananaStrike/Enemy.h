@@ -12,10 +12,13 @@ class BANANASTRIKE_API AEnemy : public ACharacter
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
-	UMaterialInterface* DonutMaterial;
+	UMaterialInterface* Material;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
-	UMaterialInstanceDynamic* DonutMaterialInstance;
+	UMaterialInstanceDynamic* MaterialInstance;
+
+	UPROPERTY()
+	UCapsuleComponent* EnemyCapsuleComponent;
 	
 	UPROPERTY()
 	UMeshComponent* MeshComponent;
@@ -30,11 +33,14 @@ protected:
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-private:
+	UFUNCTION(BlueprintCallable)
+	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult){}
+	
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
 
@@ -43,5 +49,8 @@ private:
 	
 	UPROPERTY()
 	float RemapValue;
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 20;
 
 };

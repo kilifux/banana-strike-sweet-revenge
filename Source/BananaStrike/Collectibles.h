@@ -32,11 +32,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* MeshComponent;
-
-	UPROPERTY()
+	
 	FRotator CurrentRotation;
 	
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class ABananaStrikeCharacter* BananaStrikeCharacter;
 
 public:	

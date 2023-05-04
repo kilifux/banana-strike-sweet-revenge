@@ -3,27 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Collectibles.h"
-#include "GunCollectible.generated.h"
+#include "Enemy.h"
+#include "Donut.generated.h"
 
 /**
  * 
  */
-
-class AGun;
-
 UCLASS()
-class BANANASTRIKE_API AGunCollectible : public ACollectibles
+class BANANASTRIKE_API ADonut : public AEnemy
 {
 	GENERATED_BODY()
 
 protected:
 	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AGun> GunClass;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	AGun* Gun;
+	AController* GetOwnerController() const;
 	
 };

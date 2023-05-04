@@ -15,7 +15,7 @@
 AGun::AGun()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
 	SetRootComponent(SceneComponent);
@@ -57,7 +57,9 @@ void AGun::PullTrigger()
 		bCanShoot = false;
 		TimerDelegate.BindUFunction(this, FName("SetCanShoot"), true);
 		GetWorld()->GetTimerManager().SetTimer(ShootTimerHandle, TimerDelegate, ShootRate, false);
-		GetWorld()->SpawnActor<ANiagaraActor>(ShootEffect, Hit.Location, ShotDirection.Rotation());
+		GetWorld()->SpawnActor<ANiagaraActor>(HitEffect, Hit.Location, ShotDirection.Rotation());
+		FVector ToTarget = Hit.Location - ProjectileSpawnPoint->GetComponentLocation();
+		GetWorld()->SpawnActor<ANiagaraActor>(ShootLineEffect, ProjectileSpawnPoint->GetComponentLocation(), ToTarget.Rotation());
 
 		AActor* HitActor = Hit.GetActor();
 		if (HitActor)

@@ -3,11 +3,13 @@
 
 #include "Enemy.h"
 
+#include "Components/CapsuleComponent.h"
+
 // Sets default values
 AEnemy::AEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -16,10 +18,18 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	EnemyCapsuleComponent = FindComponentByClass<UCapsuleComponent>();
+	
+	if (EnemyCapsuleComponent)
+	{
+		EnemyCapsuleComponent->SetGenerateOverlapEvents(true);
+		EnemyCapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnCapsuleBeginOverlap);
+	}
+	
 	Health = MaxHealth;
 	MeshComponent = GetMesh();
-	DonutMaterial = MeshComponent->GetMaterial(0);
-	DonutMaterialInstance = MeshComponent->CreateDynamicMaterialInstance(0, DonutMaterial);
+	Material = MeshComponent->GetMaterial(0);
+	MaterialInstance = MeshComponent->CreateDynamicMaterialInstance(0, Material);
 	
 }
 
@@ -34,19 +44,17 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	UE_LOG(LogTemp, Warning, TEXT("Health Enemy left %f"), Health);
 	RemapValue = FMath::Clamp(Health / MaxHealth, 0.0f, 1.0f);
 	
-	if(DonutMaterialInstance)
+	if(MaterialInstance)
 	{
-		DonutMaterialInstance->SetScalarParameterValue("Health_Color", RemapValue);
+		MaterialInstance->SetScalarParameterValue("Health_Color", RemapValue);
+	}
+
+	if (Health == 0)
+	{
+		Destroy();
 	}
 	
 	return DamageToApply;
-}
-
-// Called every frame
-void AEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 

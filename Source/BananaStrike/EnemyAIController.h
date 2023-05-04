@@ -13,13 +13,12 @@ UCLASS()
 class BANANASTRIKE_API AEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
-
-private:
+	
 	UPROPERTY()
 	APawn* PlayerPawn;
 
-	UPROPERTY(EditAnywhere)
-	class UBehaviorTree* AIBehavior;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = AI, meta = (AllowPrivateAccess = "true"))
+	UBehaviorTree* AIBehavior;
 	
 protected:
 	// Called when the game starts or when spawned
