@@ -16,6 +16,9 @@ void ADonut::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 		if (BananaStrikeCharacter)
 		{
 			BananaStrikeCharacter->TakeDamage(Damage, FDamageEvent(), GetOwnerController(), this);
+			FVector LaunchDirection = BananaStrikeCharacter->GetActorLocation() - GetActorLocation();
+			LaunchDirection.Normalize();
+			BananaStrikeCharacter->LaunchCharacter(LaunchDirection * 800, true, false);
 		}
 		
 	}
