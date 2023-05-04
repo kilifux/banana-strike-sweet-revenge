@@ -3,6 +3,8 @@
 
 #include "Enemy.h"
 
+#include "Components/CapsuleComponent.h"
+
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -16,6 +18,14 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	EnemyCapsuleComponent = FindComponentByClass<UCapsuleComponent>();
+	
+	if (EnemyCapsuleComponent)
+	{
+		EnemyCapsuleComponent->SetGenerateOverlapEvents(true);
+		EnemyCapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnCapsuleBeginOverlap);
+	}
+	
 	Health = MaxHealth;
 	MeshComponent = GetMesh();
 	Material = MeshComponent->GetMaterial(0);

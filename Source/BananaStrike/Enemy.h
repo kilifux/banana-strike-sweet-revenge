@@ -16,6 +16,9 @@ class BANANASTRIKE_API AEnemy : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
 	UMaterialInstanceDynamic* MaterialInstance;
+
+	UPROPERTY()
+	UCapsuleComponent* EnemyCapsuleComponent;
 	
 	UPROPERTY()
 	UMeshComponent* MeshComponent;
@@ -29,6 +32,14 @@ protected:
 	virtual void BeginPlay() override;
 	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult){}
 	
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100;
@@ -38,5 +49,8 @@ protected:
 	
 	UPROPERTY()
 	float RemapValue;
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 20;
 
 };
