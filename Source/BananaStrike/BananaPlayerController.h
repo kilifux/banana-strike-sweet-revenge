@@ -26,6 +26,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UUserWidget> HUDNoGunCrosshairWidgetClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UUserWidget> HUDRadialMenuClass;
+	
 	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDGunCrosshairUserWidget;
 
@@ -35,8 +38,14 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDCoinsUserWidget;
 
+	UPROPERTY(EditAnywhere)
+	UUserWidget* HUDRadialMenuWidget;
+	
 	UPROPERTY(VisibleAnywhere)
 	bool bWidgetOnView;
+
+	UPROPERTY()
+	bool bRadialButtonHovered;
 
 public:
 	UFUNCTION()
@@ -55,5 +64,16 @@ public:
 	void SetCoinWidget();
 
 	UFUNCTION()
+	void AddRadialMenuWidget();
+
+	UFUNCTION()
+	void RemoveRadialMenuWidget();
+	
+	UFUNCTION()
 	UUserWidget* GetCoinsUserWidget() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetRadialButtonHoverd(bool isButtonHovered);
+
+	
 };

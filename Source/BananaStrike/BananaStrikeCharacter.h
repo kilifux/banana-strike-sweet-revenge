@@ -48,6 +48,9 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SlotTwoAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* RadialMenu;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
 	UMaterialInterface* BananaMaterial;
 
@@ -102,9 +105,6 @@ private:
 	float Health;
 	
 	float RemapValue;
-
-	bool bSlotOnePressed = false;
-	bool bSlotTwoPressed = false;
 	
 	UPROPERTY(VisibleAnywhere)
 	class ABananaPlayerController* BananaPlayerController;
@@ -113,17 +113,17 @@ private:
 	class UWidgetAnimation* EnterAnimation;
 	
 public:
-	UFUNCTION()
-	void SetSlotOnePressed();
-	
-	UFUNCTION()
-	void SetSlotTwoPressed();
-
 	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
 	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
 
 	UFUNCTION()
 	UWidgetAnimation* GetEnterCoinWidgetAnimation() const;
+
+	UFUNCTION()
+	void ShowRadialMenuWidget();
+
+	UFUNCTION()
+	void RemoveRadialMenuWidget();
 
 protected:
 	// APawn interface
