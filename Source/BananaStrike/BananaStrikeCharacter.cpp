@@ -217,7 +217,5 @@ void ABananaStrikeCharacter::RemoveRadialMenuWidget()
 void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
 {
 	EquippedGuns.Add(Gun);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Added Gun: %u"), EquippedGuns.Num());
 }
 

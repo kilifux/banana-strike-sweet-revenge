@@ -23,6 +23,11 @@ void ABananaPlayerController::BeginPlay()
 	SetNoGunWidget();
 }
 
+int ABananaPlayerController::GetHoveredRadialIndex() const
+{
+	return HoveredRadialIndex;
+}
+
 void ABananaPlayerController::SetWidgetOnView(bool isWidgetOnView)
 {
 	bWidgetOnView = isWidgetOnView;

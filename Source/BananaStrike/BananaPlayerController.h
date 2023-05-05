@@ -50,6 +50,9 @@ private:
 	class ABananaStrikeCharacter* BananaStrikeCharacter;
 	
 public:
+	UFUNCTION(BlueprintCallable)
+	int GetHoveredRadialIndex() const;
+	
 	UFUNCTION()
 	void SetWidgetOnView(bool isWidgetOnView);
 
