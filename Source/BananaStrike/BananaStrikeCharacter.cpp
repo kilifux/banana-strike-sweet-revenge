@@ -66,6 +66,8 @@ void ABananaStrikeCharacter::BeginPlay()
 	BananaMaterial = MeshComponent->GetMaterial(0);
 	BananaMaterialInstance = MeshComponent->CreateDynamicMaterialInstance(0, BananaMaterial);
 
+	CurrentGun = nullptr;
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -106,10 +108,9 @@ void ABananaStrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		
-		EnhancedInputComponent->BindAction(SlotOneAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::SetSlotOne);
-		EnhancedInputComponent->BindAction(SlotOneAction, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::SetSlotOnePressed);
-		EnhancedInputComponent->BindAction(SlotTwoAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::SetSlotTwo);
-		EnhancedInputComponent->BindAction(SlotTwoAction, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::SetSlotTwoPressed);
+		//Radial Menu
+		EnhancedInputComponent->BindAction(RadialMenu, ETriggerEvent::Started, this, &ABananaStrikeCharacter::ShowRadialMenuWidget);
+		EnhancedInputComponent->BindAction(RadialMenu, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::RemoveRadialMenuWidget);
 
 		//Shooting
 		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &ABananaStrikeCharacter::Shoot);
@@ -162,40 +163,9 @@ void ABananaStrikeCharacter::Look(const FInputActionValue& Value)
 
 void ABananaStrikeCharacter::Shoot()
 {
-	if (EquippedGun)
+	if (CurrentGun)
 	{
-		EquippedGun->PullTrigger();
-	}
-}
-
-void ABananaStrikeCharacter::SetSlotOne()
-{
-	if(!bSlotOnePressed)
-	{
-		if (BananaPlayerController)
-		{
-			BananaPlayerController->SetNoGunWidget();
-			if (EquippedGun)
-			{
-				EquippedGun->SetActorHiddenInGame(true);
-				EquippedGun->SetNoGunMode(true);
-			}
-		}
-		bSlotOnePressed = true;
-	}
-}
-
-void ABananaStrikeCharacter::SetSlotTwo()
-{
-	if(!bSlotTwoPressed)
-	{
-		if (BananaPlayerController && EquippedGun)
-		{
-			BananaPlayerController->SetGunWidget();
-			EquippedGun->SetActorHiddenInGame(false);
-			EquippedGun->SetNoGunMode(false);
-		}
-		bSlotTwoPressed = true;
+		CurrentGun->PullTrigger();
 	}
 }
 
@@ -209,19 +179,19 @@ int ABananaStrikeCharacter::GetCoins() const
 	return Coins;
 }
 
-void ABananaStrikeCharacter::SetEquippedGun(AGun* Gun) 
+void ABananaStrikeCharacter::SetCurrentGun(AGun* Gun) 
 {
-	EquippedGun = Gun;
+	CurrentGun = Gun;
 }
 
-void ABananaStrikeCharacter::SetSlotOnePressed()
+AGun* ABananaStrikeCharacter::GetCurrentGun() const
 {
-	bSlotOnePressed = false;
+	return CurrentGun;
 }
 
-void ABananaStrikeCharacter::SetSlotTwoPressed()
+TArray<AGun*> ABananaStrikeCharacter::GetEquippedGuns() const
 {
-	bSlotTwoPressed = false;
+	return EquippedGuns;
 }
 
 void ABananaStrikeCharacter::SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation)
@@ -232,5 +202,20 @@ void ABananaStrikeCharacter::SetEnterCoinWidgetAnimation(UWidgetAnimation* Widge
 UWidgetAnimation* ABananaStrikeCharacter::GetEnterCoinWidgetAnimation() const
 {
 	return EnterAnimation;
+}
+
+void ABananaStrikeCharacter::ShowRadialMenuWidget()
+{
+	BananaPlayerController->AddRadialMenuWidget();
+}
+
+void ABananaStrikeCharacter::RemoveRadialMenuWidget()
+{
+	BananaPlayerController->RemoveRadialMenuWidget();
+}
+
+void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
+{
+	EquippedGuns.Add(Gun);
 }
 

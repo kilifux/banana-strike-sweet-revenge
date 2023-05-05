@@ -48,6 +48,9 @@ class ABananaStrikeCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SlotTwoAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* RadialMenu;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Materials", meta = (AllowPrivateAccess = "true"))
 	UMaterialInterface* BananaMaterial;
 
@@ -70,7 +73,10 @@ public:
 	int GetCoins() const;
 
 	UFUNCTION()
-	void SetEquippedGun(AGun* Gun);
+	void SetCurrentGun(AGun* Gun);
+
+	UFUNCTION()
+	AGun* GetCurrentGun() const;
 
 protected:
 
@@ -82,16 +88,12 @@ protected:
 
 	void Shoot();
 
-	void SetSlotOne();
-	
-	void SetSlotTwo();
-
 private:
 	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
 
 	UPROPERTY(VisibleAnywhere)
-	AGun* EquippedGun;
+	AGun* CurrentGun;
 	
 	bool bPlayerHasGun = false;
 
@@ -102,28 +104,34 @@ private:
 	float Health;
 	
 	float RemapValue;
-
-	bool bSlotOnePressed = false;
-	bool bSlotTwoPressed = false;
 	
 	UPROPERTY(VisibleAnywhere)
 	class ABananaPlayerController* BananaPlayerController;
 
 	UPROPERTY(EditDefaultsOnly)
 	class UWidgetAnimation* EnterAnimation;
-	
+
+	UPROPERTY()
+	TArray<AGun*> EquippedGuns;
+
 public:
 	UFUNCTION()
-	void SetSlotOnePressed();
+	TArray<AGun*> GetEquippedGuns() const;
 	
-	UFUNCTION()
-	void SetSlotTwoPressed();
-
 	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
 	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
 
 	UFUNCTION()
 	UWidgetAnimation* GetEnterCoinWidgetAnimation() const;
+
+	UFUNCTION()
+	void ShowRadialMenuWidget();
+
+	UFUNCTION()
+	void RemoveRadialMenuWidget();
+
+	UFUNCTION()
+	void AddGunToArray(AGun* Gun);
 
 protected:
 	// APawn interface
@@ -132,13 +140,11 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
-
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	
 };
 

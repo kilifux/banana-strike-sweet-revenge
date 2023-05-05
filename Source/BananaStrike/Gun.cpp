@@ -3,13 +3,8 @@
 
 #include "Gun.h"
 
-#include "BananaStrikeCharacter.h"
-#include "Components/BoxComponent.h"
-#include "Components/TextRenderComponent.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "NiagaraActor.h"
 #include "Engine/DamageEvents.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGun::AGun()
@@ -34,13 +29,6 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 
-}
-
-// Called every frame
-void AGun::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	
 }
 
 void AGun::PullTrigger()
