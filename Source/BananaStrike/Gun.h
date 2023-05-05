@@ -20,12 +20,13 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	UFUNCTION()
 	void PullTrigger();
-
+	
+	UFUNCTION()
 	bool GunTrace(FHitResult &Hit, FVector& ShotDirection);
+	
+	UFUNCTION()
 	AController* GetOwnerController() const;
 
 	UFUNCTION()
@@ -64,7 +65,7 @@ private:
 	
 	bool bCanShoot;
 
-	bool bNoGunMode;
+	bool bNoGunMode;	
 
 	UPROPERTY(EditDefaultsOnly)
 	float ShootRate;
