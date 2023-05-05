@@ -73,7 +73,10 @@ public:
 	int GetCoins() const;
 
 	UFUNCTION()
-	void SetEquippedGun(AGun* Gun);
+	void SetCurrentGun(AGun* Gun);
+
+	UFUNCTION()
+	AGun* GetCurrentGun() const;
 
 protected:
 
@@ -85,16 +88,12 @@ protected:
 
 	void Shoot();
 
-	void SetSlotOne();
-	
-	void SetSlotTwo();
-
 private:
 	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
 
 	UPROPERTY(VisibleAnywhere)
-	AGun* EquippedGun;
+	AGun* CurrentGun;
 	
 	bool bPlayerHasGun = false;
 
@@ -111,8 +110,14 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	class UWidgetAnimation* EnterAnimation;
-	
+
+	UPROPERTY()
+	TArray<AGun*> EquippedGuns;
+
 public:
+	UFUNCTION()
+	TArray<AGun*> GetEquippedGuns() const;
+	
 	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
 	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
 
@@ -125,6 +130,9 @@ public:
 	UFUNCTION()
 	void RemoveRadialMenuWidget();
 
+	UFUNCTION()
+	void AddGunToArray(AGun* Gun);
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -132,13 +140,11 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
-
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	
 };
 

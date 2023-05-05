@@ -66,6 +66,8 @@ void ABananaStrikeCharacter::BeginPlay()
 	BananaMaterial = MeshComponent->GetMaterial(0);
 	BananaMaterialInstance = MeshComponent->CreateDynamicMaterialInstance(0, BananaMaterial);
 
+	CurrentGun = nullptr;
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -106,9 +108,6 @@ void ABananaStrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		
-		EnhancedInputComponent->BindAction(SlotOneAction, ETriggerEvent::Started, this, &ABananaStrikeCharacter::SetSlotOne);
-		EnhancedInputComponent->BindAction(SlotTwoAction, ETriggerEvent::Started, this, &ABananaStrikeCharacter::SetSlotTwo);
-
 		//Radial Menu
 		EnhancedInputComponent->BindAction(RadialMenu, ETriggerEvent::Started, this, &ABananaStrikeCharacter::ShowRadialMenuWidget);
 		EnhancedInputComponent->BindAction(RadialMenu, ETriggerEvent::Completed, this, &ABananaStrikeCharacter::RemoveRadialMenuWidget);
@@ -164,33 +163,10 @@ void ABananaStrikeCharacter::Look(const FInputActionValue& Value)
 
 void ABananaStrikeCharacter::Shoot()
 {
-	if (EquippedGun)
+	if (CurrentGun)
 	{
-		EquippedGun->PullTrigger();
+		CurrentGun->PullTrigger();
 	}
-}
-
-void ABananaStrikeCharacter::SetSlotOne()
-{
-		if (BananaPlayerController)
-		{
-			BananaPlayerController->SetNoGunWidget();
-			if (EquippedGun)
-			{
-				EquippedGun->SetActorHiddenInGame(true);
-				EquippedGun->SetNoGunMode(true);
-			}
-		}
-}
-
-void ABananaStrikeCharacter::SetSlotTwo()
-{
-		if (BananaPlayerController && EquippedGun)
-		{
-			BananaPlayerController->SetGunWidget();
-			EquippedGun->SetActorHiddenInGame(false);
-			EquippedGun->SetNoGunMode(false);
-		}
 }
 
 void ABananaStrikeCharacter::AddCoin()
@@ -203,9 +179,19 @@ int ABananaStrikeCharacter::GetCoins() const
 	return Coins;
 }
 
-void ABananaStrikeCharacter::SetEquippedGun(AGun* Gun) 
+void ABananaStrikeCharacter::SetCurrentGun(AGun* Gun) 
 {
-	EquippedGun = Gun;
+	CurrentGun = Gun;
+}
+
+AGun* ABananaStrikeCharacter::GetCurrentGun() const
+{
+	return CurrentGun;
+}
+
+TArray<AGun*> ABananaStrikeCharacter::GetEquippedGuns() const
+{
+	return EquippedGuns;
 }
 
 void ABananaStrikeCharacter::SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation)
@@ -226,5 +212,12 @@ void ABananaStrikeCharacter::ShowRadialMenuWidget()
 void ABananaStrikeCharacter::RemoveRadialMenuWidget()
 {
 	BananaPlayerController->RemoveRadialMenuWidget();
+}
+
+void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
+{
+	EquippedGuns.Add(Gun);
+	
+	UE_LOG(LogTemp, Warning, TEXT("Added Gun: %u"), EquippedGuns.Num());
 }
 

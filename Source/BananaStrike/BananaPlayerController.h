@@ -6,9 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BananaPlayerController.generated.h"
 
-/**
- * 
- */
+class UUserWidget;
+
 UCLASS()
 class BANANASTRIKE_API ABananaPlayerController : public APlayerController
 {
@@ -18,16 +17,16 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> HUDCoinsWidgetClass;
+	TSubclassOf<UUserWidget> HUDCoinsWidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> HUDGunCrosshairWidgetClass;
+	TSubclassOf<UUserWidget> HUDGunCrosshairWidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> HUDNoGunCrosshairWidgetClass;
+	TSubclassOf<UUserWidget> HUDNoGunCrosshairWidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> HUDRadialMenuClass;
+	TSubclassOf<UUserWidget> HUDRadialMenuClass;
 	
 	UPROPERTY(VisibleAnywhere)
 	UUserWidget* HUDGunCrosshairUserWidget;
@@ -44,9 +43,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	bool bWidgetOnView;
 
-	UPROPERTY()
-	bool bRadialButtonHovered;
+	UPROPERTY(VisibleAnywhere)
+	int HoveredRadialIndex;
 
+	UPROPERTY()
+	class ABananaStrikeCharacter* BananaStrikeCharacter;
+	
 public:
 	UFUNCTION()
 	void SetWidgetOnView(bool isWidgetOnView);
@@ -73,7 +75,10 @@ public:
 	UUserWidget* GetCoinsUserWidget() const;
 
 	UFUNCTION(BlueprintCallable)
-	void SetRadialButtonHoverd(bool isButtonHovered);
+	void SetHoveredRadialIndex(int Index);
+
+	UFUNCTION()
+	void SetCurrentWeaponFromRadialMenu(int index);
 
 	
 };

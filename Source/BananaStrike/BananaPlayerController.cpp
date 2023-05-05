@@ -2,6 +2,9 @@
 
 
 #include "BananaPlayerController.h"
+
+#include "BananaStrikeCharacter.h"
+#include "Gun.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -13,11 +16,12 @@ void ABananaPlayerController::BeginPlay()
 	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
 	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
 	HUDRadialMenuWidget = CreateWidget(this, HUDRadialMenuClass);
+
+	BananaStrikeCharacter = Cast<ABananaStrikeCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	
 	SetCoinWidget();
 	SetNoGunWidget();
 }
-
 
 void ABananaPlayerController::SetWidgetOnView(bool isWidgetOnView)
 {
@@ -69,7 +73,6 @@ void ABananaPlayerController::AddRadialMenuWidget()
 	HUDRadialMenuWidget->AddToViewport();
 	SetShowMouseCursor(true);
 	UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(this, HUDRadialMenuWidget);
-	
 }
 
 void ABananaPlayerController::RemoveRadialMenuWidget()
@@ -78,10 +81,22 @@ void ABananaPlayerController::RemoveRadialMenuWidget()
 	HUDRadialMenuWidget->RemoveFromParent();
 	SetShowMouseCursor(false);
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);
-
-	if (bRadialButtonHovered)
+	
+	if (HoveredRadialIndex == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("WLASNIE WYSZEDLES Z BOTTOM BUTTON!"));
+		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
+	}
+	else if (HoveredRadialIndex == 1 && BananaStrikeCharacter->GetEquippedGuns().Num() > 0)
+	{
+		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
+	}
+	else if (HoveredRadialIndex == 2 && BananaStrikeCharacter->GetEquippedGuns().Num() > 1)
+	{
+		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
+	}
+	else if (HoveredRadialIndex == 3 && BananaStrikeCharacter->GetEquippedGuns().Num() > 2)
+	{
+		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
 	}
 }
 
@@ -90,8 +105,32 @@ UUserWidget* ABananaPlayerController::GetCoinsUserWidget() const
 	return HUDCoinsUserWidget;
 }
 
-void ABananaPlayerController::SetRadialButtonHoverd(bool isButtonHovered)
+void ABananaPlayerController::SetHoveredRadialIndex(int Index)
 {
-	bRadialButtonHovered = isButtonHovered;
+	HoveredRadialIndex = Index;
 }
+
+void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
+{
+	SetGunWidget();
+	
+	if (BananaStrikeCharacter->GetCurrentGun())
+	{
+		BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(true);
+		BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
+	}
+	
+	if (index == 0)
+	{
+		BananaStrikeCharacter->SetCurrentGun(nullptr);
+		SetNoGunWidget();
+	}
+	else
+	{
+		BananaStrikeCharacter->SetCurrentGun(BananaStrikeCharacter->GetEquippedGuns()[index - 1]);
+		BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(false);
+		BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
+	}
+}
+
 
