@@ -48,8 +48,17 @@ private:
 
 	UPROPERTY()
 	class ABananaStrikeCharacter* BananaStrikeCharacter;
-	
+
+	UPROPERTY()
+	TArray<UImage*> Images;
+
 public:
+	UFUNCTION(BlueprintCallable)
+	void SetImages(const TArray<UImage*>& ImageArray);
+
+	UFUNCTION()
+	TArray<UImage*> GetImagesArray() const;
+	
 	UFUNCTION(BlueprintCallable)
 	int GetHoveredRadialIndex() const;
 	

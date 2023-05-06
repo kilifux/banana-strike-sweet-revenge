@@ -7,6 +7,7 @@
 #include "Gun.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Components/Image.h"
 #include "Kismet/GameplayStatics.h"
 
 void ABananaPlayerController::BeginPlay()
@@ -16,11 +17,22 @@ void ABananaPlayerController::BeginPlay()
 	HUDGunCrosshairUserWidget = CreateWidget(this, HUDGunCrosshairWidgetClass);
 	HUDNoGunCrosshairUserWidget = CreateWidget(this, HUDNoGunCrosshairWidgetClass);
 	HUDRadialMenuWidget = CreateWidget(this, HUDRadialMenuClass);
-
+	
 	BananaStrikeCharacter = Cast<ABananaStrikeCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	
 	SetCoinWidget();
 	SetNoGunWidget();
+	
+}
+
+void ABananaPlayerController::SetImages(const TArray<UImage*>& ImagesArray)
+{
+	Images = ImagesArray;
+}
+
+TArray<UImage*> ABananaPlayerController::GetImagesArray() const
+{
+	return Images;
 }
 
 int ABananaPlayerController::GetHoveredRadialIndex() const

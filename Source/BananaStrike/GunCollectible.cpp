@@ -17,16 +17,12 @@ void AGunCollectible::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
 		
 		if (BananaStrikeCharacter)
 		{
-			ABananaPlayerController* Controller = Cast<ABananaPlayerController>(BananaStrikeCharacter->GetController());
-			if (Controller)
-			{
-				Gun = GetWorld()->SpawnActor<AGun>(GunClass);
-				Gun->SetOwner(BananaStrikeCharacter);
-				Gun->AttachToComponent(BananaStrikeCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket"));
-				Gun->SetActorHiddenInGame(true);
-				BananaStrikeCharacter->AddGunToArray(Gun);
-				Destroy();
-			}
+			Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+			Gun->SetOwner(BananaStrikeCharacter);
+			Gun->AttachToComponent(BananaStrikeCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket"));
+			BananaStrikeCharacter->AddGunToArray(Gun);
+			//UE_LOG(LogTemp, Warning, TEXT("Gun ID: %u"), Gun->GetGunID());
+			Destroy();
 		}
 	}
 }

@@ -92,3 +92,8 @@ void AGun::SetNoGunMode(bool IsNoGunMode)
 	bNoGunMode = IsNoGunMode;
 }
 
+int AGun::GetGunID() const
+{
+	return GunID;
+}
+
