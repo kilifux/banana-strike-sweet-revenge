@@ -13,6 +13,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Animation/WidgetAnimation.h"
 #include "Gun.h"
+#include "Components/Image.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -217,5 +218,13 @@ void ABananaStrikeCharacter::RemoveRadialMenuWidget()
 void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
 {
 	EquippedGuns.Add(Gun);
+	if (CurrentGun)
+	{
+		CurrentGun->SetActorHiddenInGame(true);
+	}
+	
+	SetCurrentGun(Gun);
+	BananaPlayerController->SetGunWidget();
+	BananaPlayerController->GetImagesArray()[Gun->GetGunID()]->SetOpacity(1.f);
 }
 

@@ -34,6 +34,9 @@ public:
 
 	UFUNCTION()
 	void SetNoGunMode(bool IsNoGunMode);
+
+	UFUNCTION()
+	int GetGunID() const;
 	
 
 private:
@@ -57,6 +60,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 20;
+
+	UPROPERTY(EditAnywhere)
+	int GunID;
 	
 	FCollisionQueryParams Params;
 
