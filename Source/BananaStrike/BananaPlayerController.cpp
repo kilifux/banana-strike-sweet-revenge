@@ -113,6 +113,11 @@ void ABananaPlayerController::SetHoveredRadialIndex(int Index)
 
 void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 {
+	if (index == 5)
+	{
+		return;
+	}
+	
 	if (BananaStrikeCharacter->GetCurrentGun())
 	{
 		BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(true);
@@ -125,7 +130,7 @@ void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 		BananaStrikeCharacter->SetCurrentGun(nullptr);
 		return;
 	}
-
+	
 	for (AGun* Gun : BananaStrikeCharacter->GetEquippedGuns())
 	{
 		SetGunWidget();
@@ -134,10 +139,9 @@ void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 			BananaStrikeCharacter->SetCurrentGun(Gun);
 			BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(false);
 			BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
-			return;
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Nie znaleziono broni o indeksie %d"), index);
+
 }
 
 

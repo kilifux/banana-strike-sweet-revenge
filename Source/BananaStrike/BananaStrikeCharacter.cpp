@@ -218,8 +218,12 @@ void ABananaStrikeCharacter::RemoveRadialMenuWidget()
 void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
 {
 	EquippedGuns.Add(Gun);
+	if (CurrentGun)
+	{
+		CurrentGun->SetActorHiddenInGame(true);
+	}
 	
-	CurrentGun = Gun;
+	SetCurrentGun(Gun);
 	BananaPlayerController->SetGunWidget();
 	BananaPlayerController->GetImagesArray()[Gun->GetGunID()]->SetOpacity(1.f);
 }
