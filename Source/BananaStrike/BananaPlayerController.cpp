@@ -98,23 +98,7 @@ void ABananaPlayerController::RemoveRadialMenuWidget()
 	HUDRadialMenuWidget->RemoveFromParent();
 	SetShowMouseCursor(false);
 	UWidgetBlueprintLibrary::SetInputMode_GameOnly(this);
-	
-	if (HoveredRadialIndex == 0)
-	{
-		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
-	}
-	else if (HoveredRadialIndex == 1 && BananaStrikeCharacter->GetEquippedGuns().Num() > 0)
-	{
-		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
-	}
-	else if (HoveredRadialIndex == 2 && BananaStrikeCharacter->GetEquippedGuns().Num() > 1)
-	{
-		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
-	}
-	else if (HoveredRadialIndex == 3 && BananaStrikeCharacter->GetEquippedGuns().Num() > 2)
-	{
-		SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
-	}
+	SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
 }
 
 UUserWidget* ABananaPlayerController::GetCoinsUserWidget() const
@@ -129,8 +113,6 @@ void ABananaPlayerController::SetHoveredRadialIndex(int Index)
 
 void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 {
-	SetGunWidget();
-	
 	if (BananaStrikeCharacter->GetCurrentGun())
 	{
 		BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(true);
@@ -139,15 +121,23 @@ void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 	
 	if (index == 0)
 	{
-		BananaStrikeCharacter->SetCurrentGun(nullptr);
 		SetNoGunWidget();
+		BananaStrikeCharacter->SetCurrentGun(nullptr);
+		return;
 	}
-	else
+
+	for (AGun* Gun : BananaStrikeCharacter->GetEquippedGuns())
 	{
-		BananaStrikeCharacter->SetCurrentGun(BananaStrikeCharacter->GetEquippedGuns()[index - 1]);
-		BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(false);
-		BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
+		SetGunWidget();
+		if (Gun->GetGunID() == index)
+		{
+			BananaStrikeCharacter->SetCurrentGun(Gun);
+			BananaStrikeCharacter->GetCurrentGun()->SetActorHiddenInGame(false);
+			BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
+			return;
+		}
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Nie znaleziono broni o indeksie %d"), index);
 }
 
 

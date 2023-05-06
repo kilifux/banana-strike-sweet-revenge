@@ -21,7 +21,6 @@ void AGunCollectible::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp,
 			Gun->SetOwner(BananaStrikeCharacter);
 			Gun->AttachToComponent(BananaStrikeCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket"));
 			BananaStrikeCharacter->AddGunToArray(Gun);
-			//UE_LOG(LogTemp, Warning, TEXT("Gun ID: %u"), Gun->GetGunID());
 			Destroy();
 		}
 	}
