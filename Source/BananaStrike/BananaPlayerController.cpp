@@ -25,30 +25,26 @@ void ABananaPlayerController::BeginPlay()
 	
 }
 
-void ABananaPlayerController::SetImages(const TArray<UImage*>& ImagesArray)
-{
-	Images = ImagesArray;
-}
-
 TArray<UImage*> ABananaPlayerController::GetImagesArray() const
 {
 	return Images;
 }
 
-int ABananaPlayerController::GetHoveredRadialIndex() const
+void ABananaPlayerController::SetImages(const TArray<UImage*>& ImagesArray)
 {
-	return HoveredRadialIndex;
+	Images = ImagesArray;
 }
 
-void ABananaPlayerController::SetWidgetOnView(bool isWidgetOnView)
+bool ABananaPlayerController::GetIsCoinWidgetOnView() const
+{
+	return bWidgetOnView;
+}
+
+void ABananaPlayerController::SetIsCoinWidgetOnView(bool isWidgetOnView)
 {
 	bWidgetOnView = isWidgetOnView;
 }
 
-bool ABananaPlayerController::GetWidgetOnView() const
-{
-	return bWidgetOnView;
-}
 
 void ABananaPlayerController::SetGunWidget()
 {
@@ -101,7 +97,7 @@ void ABananaPlayerController::RemoveRadialMenuWidget()
 	SetCurrentWeaponFromRadialMenu(HoveredRadialIndex);
 }
 
-UUserWidget* ABananaPlayerController::GetCoinsUserWidget() const
+UUserWidget* ABananaPlayerController::GetCoinsWidget() const
 {
 	return HUDCoinsUserWidget;
 }
@@ -141,7 +137,6 @@ void ABananaPlayerController::SetCurrentWeaponFromRadialMenu(int index)
 			BananaStrikeCharacter->GetCurrentGun()->SetNoGunMode(false);
 		}
 	}
-
 }
 
 

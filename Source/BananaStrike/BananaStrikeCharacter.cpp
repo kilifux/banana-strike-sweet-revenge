@@ -225,6 +225,6 @@ void ABananaStrikeCharacter::AddGunToArray(AGun* Gun)
 	
 	SetCurrentGun(Gun);
 	BananaPlayerController->SetGunWidget();
-	BananaPlayerController->GetImagesArray()[Gun->GetGunID()]->SetOpacity(1.f);
+	BananaPlayerController->GetImagesArray()[Gun->GetGunID()]->SetOpacity(1.f);	//show equipped gun's image in Radial Menu 
 }
 

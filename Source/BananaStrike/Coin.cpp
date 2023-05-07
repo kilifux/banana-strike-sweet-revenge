@@ -14,13 +14,11 @@ ACoin::ACoin()
 
 }
 
-
 void ACoin::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
-
 
 void ACoin::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) 
@@ -38,10 +36,10 @@ void ACoin::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 
 void ACoin::HideCoinWidget()
 {
-	if (BananaPlayerController->GetWidgetOnView())
+	if (BananaPlayerController->GetIsCoinWidgetOnView())
 	{
 		CoinWidget->PlayAnimation(CoinWidgetAnimation, 0, 1, EUMGSequencePlayMode::Reverse);
-		BananaPlayerController->SetWidgetOnView(false);
+		BananaPlayerController->SetIsCoinWidgetOnView(false);
 		Destroy();
 	}
 }
@@ -49,7 +47,7 @@ void ACoin::HideCoinWidget()
 void ACoin::PlayCoinWidgetAnimation()
 {
 	CoinWidget->PlayAnimation(CoinWidgetAnimation);
-	BananaPlayerController->SetWidgetOnView(true);
+	BananaPlayerController->SetIsCoinWidgetOnView(true);
 	TimerDelegate.BindUFunction(this, FName("HideCoinWidget"));
 	GetWorld()->GetTimerManager().SetTimer(HideWidgetTimerHandle, TimerDelegate, ShowCoinWidgetTime, false);
 }
@@ -61,12 +59,12 @@ void ACoin::HandleCoinCollected()
 	BananaPlayerController = Cast<ABananaPlayerController>(BananaStrikeCharacter->GetController());
 	if (BananaPlayerController)
 	{
-		CoinWidget = BananaPlayerController->GetCoinsUserWidget();
+		CoinWidget = BananaPlayerController->GetCoinsWidget();
 		if (CoinWidget)
 		{
 			SetActorHiddenInGame(true);
 			SetActorEnableCollision(false);
-			if (!BananaPlayerController->GetWidgetOnView())
+			if (!BananaPlayerController->GetIsCoinWidgetOnView())
 			{
 				PlayCoinWidgetAnimation();
 			}

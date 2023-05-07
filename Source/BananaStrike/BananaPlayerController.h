@@ -12,10 +12,7 @@ UCLASS()
 class BANANASTRIKE_API ABananaPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-protected:
-	virtual void BeginPlay() override;
 
-private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> HUDCoinsWidgetClass;
 
@@ -51,44 +48,56 @@ private:
 
 	UPROPERTY()
 	TArray<UImage*> Images;
+	
+protected:
+	virtual void BeginPlay() override;
 
 public:
-	UFUNCTION(BlueprintCallable)
-	void SetImages(const TArray<UImage*>& ImageArray);
-
+	//Returns images from RadialMenu 
 	UFUNCTION()
 	TArray<UImage*> GetImagesArray() const;
 	
+	//Sets images in WBP_RadialMenu
 	UFUNCTION(BlueprintCallable)
-	int GetHoveredRadialIndex() const;
-	
-	UFUNCTION()
-	void SetWidgetOnView(bool isWidgetOnView);
+	void SetImages(const TArray<UImage*>& ImageArray);
 
+	//Gets is Coin Widget on Viewport, use in Coin class
 	UFUNCTION()
-	bool GetWidgetOnView() const;
-	
+	bool GetIsCoinWidgetOnView() const;
+
+	//Sets bWidgetOnView variable
+	UFUNCTION()
+	void SetIsCoinWidgetOnView(bool isWidgetOnView);
+
+	//Sets WBP_GunCrosshair widget
 	UFUNCTION()
 	void SetGunWidget();
 
+	//Sets WBP_NoGunCrosshair widget
 	UFUNCTION()
 	void SetNoGunWidget();
 
+	//Returns WBP_Coins widget
+	UFUNCTION()
+	UUserWidget* GetCoinsWidget() const;
+	
+	//Adds WBP_Coins widget to viewport
 	UFUNCTION()
 	void SetCoinWidget();
 
+	//Adds WBP_RadialMenu Widget to viewport
 	UFUNCTION()
 	void AddRadialMenuWidget();
-
+	
+	//Remove WBP_RadialMenu Widget from viewport
 	UFUNCTION()
 	void RemoveRadialMenuWidget();
-	
-	UFUNCTION()
-	UUserWidget* GetCoinsUserWidget() const;
 
+	//Sets index depending on the selection of the piece by player on Radial Menu
 	UFUNCTION(BlueprintCallable)
 	void SetHoveredRadialIndex(int Index);
 
+	//Sets player's current weapon depending on index of selection of the piece
 	UFUNCTION()
 	void SetCurrentWeaponFromRadialMenu(int index);
 

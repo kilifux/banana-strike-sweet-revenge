@@ -78,16 +78,24 @@ public:
 	UFUNCTION()
 	AGun* GetCurrentGun() const;
 
-protected:
+	UFUNCTION()
+	TArray<AGun*> GetEquippedGuns() const;
+	
+	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
+	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
 
-	/** Called for movement input */
-	void Move(const FInputActionValue& Value);
+	UFUNCTION()
+	UWidgetAnimation* GetEnterCoinWidgetAnimation() const;
 
-	/** Called for looking input */
-	void Look(const FInputActionValue& Value);
+	UFUNCTION()
+	void ShowRadialMenuWidget();
 
-	void Shoot();
+	UFUNCTION()
+	void RemoveRadialMenuWidget();
 
+	UFUNCTION()
+	void AddGunToArray(AGun* Gun);
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	int Coins = 0;
@@ -109,36 +117,25 @@ private:
 	class ABananaPlayerController* BananaPlayerController;
 
 	UPROPERTY(EditDefaultsOnly)
-	class UWidgetAnimation* EnterAnimation;
+	UWidgetAnimation* EnterAnimation;
 
 	UPROPERTY()
 	TArray<AGun*> EquippedGuns;
-
-public:
-	UFUNCTION()
-	TArray<AGun*> GetEquippedGuns() const;
 	
-	UFUNCTION(BlueprintCallable)	//used in WBP_Coins
-	void SetEnterCoinWidgetAnimation(UWidgetAnimation* WidgetAnimation);
-
-	UFUNCTION()
-	UWidgetAnimation* GetEnterCoinWidgetAnimation() const;
-
-	UFUNCTION()
-	void ShowRadialMenuWidget();
-
-	UFUNCTION()
-	void RemoveRadialMenuWidget();
-
-	UFUNCTION()
-	void AddGunToArray(AGun* Gun);
-
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	// To add mapping context
 	virtual void BeginPlay();
+
+	/** Called for movement input */
+	void Move(const FInputActionValue& Value);
+
+	/** Called for looking input */
+	void Look(const FInputActionValue& Value);
+
+	void Shoot();
 
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
