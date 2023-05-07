@@ -20,7 +20,9 @@ public:
 	
 	UFUNCTION()
 	void PlayCoinWidgetAnimation();
-	
+
+	//Call the OnCapsuleBeginOverlap function, which is responsible for adding coins to the player and showing the WBP_Coins widget
+	UFUNCTION()
 	void HandleCoinCollected();
 
 private:
