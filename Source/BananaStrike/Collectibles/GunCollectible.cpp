@@ -2,10 +2,9 @@
 
 
 #include "GunCollectible.h"
-
-#include "BananaPlayerController.h"
-#include "BananaStrikeCharacter.h"
-#include "Gun.h"
+#include "Player/BananaPlayerController.h"
+#include "Player/BananaStrikeCharacter.h"
+#include "Gun/Gun.h"
 
 void AGunCollectible::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                             UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) 

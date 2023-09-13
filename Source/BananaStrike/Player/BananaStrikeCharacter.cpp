@@ -12,7 +12,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Animation/WidgetAnimation.h"
-#include "Gun.h"
+#include "Gun/Gun.h"
 #include "Components/Image.h"
 
 

@@ -2,9 +2,8 @@
 
 
 #include "BananaPlayerController.h"
-
 #include "BananaStrikeCharacter.h"
-#include "Gun.h"
+#include "Gun/Gun.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/Image.h"

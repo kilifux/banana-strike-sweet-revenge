@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BananaStrikeGameMode.h"
-#include "BananaStrikeCharacter.h"
+#include "Player/BananaStrikeCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 ABananaStrikeGameMode::ABananaStrikeGameMode()

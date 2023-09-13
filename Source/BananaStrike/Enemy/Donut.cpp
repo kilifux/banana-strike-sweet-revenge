@@ -3,7 +3,7 @@
 
 #include "Donut.h"
 #include "Engine/DamageEvents.h"
-#include "BananaStrikeCharacter.h"
+#include "Player/BananaStrikeCharacter.h"
 
 void ADonut::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

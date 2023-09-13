@@ -2,9 +2,8 @@
 
 
 #include "Coin.h"
-
-#include "BananaPlayerController.h"
-#include "BananaStrikeCharacter.h"
+#include "Player/BananaPlayerController.h"
+#include "Player/BananaStrikeCharacter.h"
 #include "Blueprint/UserWidget.h"
 
 
