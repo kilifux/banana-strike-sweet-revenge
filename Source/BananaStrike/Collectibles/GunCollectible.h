@@ -24,6 +24,5 @@ protected:
 	TSubclassOf<AGun> GunClass;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	AGun* Gun;
-	
+	TObjectPtr<AGun> Gun;
 };

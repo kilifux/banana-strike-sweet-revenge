@@ -170,16 +170,6 @@ void ABananaStrikeCharacter::Shoot()
 	}
 }
 
-void ABananaStrikeCharacter::AddCoin()
-{
-	Coins += 1;
-}
-
-int ABananaStrikeCharacter::GetCoins() const
-{
-	return Coins;
-}
-
 void ABananaStrikeCharacter::SetCurrentGun(AGun* Gun) 
 {
 	CurrentGun = Gun;

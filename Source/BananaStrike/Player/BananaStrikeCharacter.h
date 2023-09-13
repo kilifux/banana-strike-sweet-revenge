@@ -66,12 +66,6 @@ class ABananaStrikeCharacter : public ACharacter
 public:
 	ABananaStrikeCharacter();
 
-	UFUNCTION(BlueprintCallable)
-	void AddCoin();
-
-	UFUNCTION(BlueprintPure)
-	int GetCoins() const;
-
 	UFUNCTION()
 	void SetCurrentGun(AGun* Gun);
 
@@ -97,9 +91,6 @@ public:
 	void AddGunToArray(AGun* Gun);
 	
 private:
-	UPROPERTY(VisibleAnywhere)
-	int Coins = 0;
-
 	UPROPERTY(VisibleAnywhere)
 	AGun* CurrentGun;
 	

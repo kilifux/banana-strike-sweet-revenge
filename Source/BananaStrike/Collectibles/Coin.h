@@ -26,11 +26,13 @@ public:
 	void HandleCoinCollected();
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class ABananaPlayerController* BananaPlayerController;
+	UPROPERTY(EditAnywhere, Category = "Coin")
+	int32 CoinValue;
+
+	TObjectPtr<class ABananaPlayerController> BananaPlayerController;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
-	UUserWidget* CoinWidget;
+	TObjectPtr<UUserWidget> CoinWidget;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	class UWidgetAnimation* CoinWidgetAnimation;
@@ -42,5 +44,4 @@ private:
 
 protected:
 	virtual void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	virtual void BeginPlay() override;
 };
