@@ -7,5 +7,4 @@ void ABananaPlayerState::AddCoins(int32 Value)
 {
 	Coins += Value;
 	OnCoinsChanged.Broadcast(this, Coins);
-	UE_LOG(LogTemp, Warning, TEXT("Coins: %d"), Coins);
 }

@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerState.h"
 #include "BananaPlayerState.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCoinsChanged, ABananaPlayerState*, PlayerState, int32, NewCredits);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCoinsChanged, ABananaPlayerState*, PlayerState, int32, CurrentCoins);
 
 UCLASS()
 class BANANASTRIKE_API ABananaPlayerState : public APlayerState
@@ -23,6 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Coins")
 	void AddCoins(int32 Value);
 
+	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnCoinsChanged OnCoinsChanged;
 	
 };

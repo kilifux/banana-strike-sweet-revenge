@@ -14,7 +14,4 @@ class BANANASTRIKE_API UCoinWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-
-public:
-
 };
